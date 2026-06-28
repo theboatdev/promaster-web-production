@@ -15,9 +15,6 @@ export default async function Home() {
   // Fetch data from Sanity
   const categories = await client.fetch(ALL_CATEGORIES_QUERY);
   const projects = await client.fetch(ALL_PROJECTS_QUERY);
-  const featuredProjects = projects.filter(
-    (project: { image?: { asset?: unknown } }) => project.image?.asset,
-  );
   const certifications = (await client.fetch(ALL_CERTIFICATIONS_QUERY)).filter(
     (cert: { abbr?: string; name?: string; description?: string; standard?: string }) =>
       cert.standard !== "iso" &&
@@ -292,7 +289,7 @@ export default async function Home() {
         </div>
 
         <div className="proj-list">
-          {featuredProjects.slice(0, 5).map((project: any, index: number) => (
+          {projects.slice(0, 5).map((project: any, index: number) => (
             <div className="proj-row" key={project._id}>
               <div>
                 <div className="pr-index">
@@ -316,31 +313,6 @@ export default async function Home() {
             </div>
           ))}
         </div>
-
-        {featuredProjects.length > 0 && (
-        <div className="proj-grid-visual">
-          {featuredProjects.slice(0, 3).map((project: any) => (
-            <Link href={`/projects/${project.slug.current}`} key={project._id} className="pgv-card">
-              {project.image?.asset ? (
-                <img
-                  src={urlFor(project.image.asset).width(800).height(600).url()}
-                  alt={project.image.alt || project.name}
-                  className="pgv-img-photo"
-                />
-              ) : (
-                <div className="img-ph" style={{ height: 280 }}>
-                  <div className="img-ph-label">Project Image</div>
-                </div>
-              )}
-              <div className="pgv-info">
-                <div className="pgv-type">{project.projectType || 'Project'} — {project.location?.split(',')[0] || 'UAE'}</div>
-                <div className="pgv-name">{project.name}</div>
-                <div className="pgv-loc">{project.location || 'UAE'} — {project.year || 'N/A'}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
-        )}
       </div>
 
       {/* ── INQUIRY ── */}
