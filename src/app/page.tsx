@@ -15,6 +15,9 @@ export default async function Home() {
   // Fetch data from Sanity
   const categories = await client.fetch(ALL_CATEGORIES_QUERY);
   const projects = await client.fetch(ALL_PROJECTS_QUERY);
+  const featuredProjects = projects.filter(
+    (project: { image?: { asset?: unknown } }) => project.image?.asset,
+  );
   const certifications = (await client.fetch(ALL_CERTIFICATIONS_QUERY)).filter(
     (cert: { abbr?: string; name?: string; description?: string; standard?: string }) =>
       cert.standard !== "iso" &&
@@ -289,7 +292,7 @@ export default async function Home() {
         </div>
 
         <div className="proj-list">
-          {projects.slice(0, 5).map((project: any, index: number) => (
+          {featuredProjects.slice(0, 5).map((project: any, index: number) => (
             <div className="proj-row" key={project._id}>
               <div>
                 <div className="pr-index">
@@ -314,8 +317,9 @@ export default async function Home() {
           ))}
         </div>
 
+        {featuredProjects.length > 0 && (
         <div className="proj-grid-visual">
-          {projects.slice(0, 3).map((project: any) => (
+          {featuredProjects.slice(0, 3).map((project: any) => (
             <Link href={`/projects/${project.slug.current}`} key={project._id} className="pgv-card">
               {project.image?.asset ? (
                 <img
@@ -336,6 +340,7 @@ export default async function Home() {
             </Link>
           ))}
         </div>
+        )}
       </div>
 
       {/* ── INQUIRY ── */}
