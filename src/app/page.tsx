@@ -290,7 +290,11 @@ export default async function Home() {
 
         <div className="proj-list">
           {projects.slice(0, 5).map((project: any, index: number) => (
-            <div className="proj-row" key={project._id}>
+            <Link
+              href={`/projects/${project.slug.current}`}
+              className="proj-row proj-row--link"
+              key={project._id}
+            >
               <div>
                 <div className="pr-index">
                   {String(index + 1).padStart(2, '0')} / {project.location?.split(',')[0] || 'UAE'}
@@ -309,8 +313,13 @@ export default async function Home() {
                   ))}
                 </div>
               </div>
-              <div className="pr-meta">{project.year || 'N/A'}</div>
-            </div>
+              <div className="pr-meta">
+                <span className="pr-year">{project.year || 'N/A'}</span>
+                <span className="pr-arrow" aria-hidden="true">
+                  →
+                </span>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
