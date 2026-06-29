@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     const mailOptions = {
       from: `"ProMaster Website" <${process.env.SMTP_USER}>`,
-      to: "tharindumishen7@gmail.com",
+      to: "promastergrp@gmail.com",
       replyTo: email,
       subject: "New Inquiry from " + name,
       html: `

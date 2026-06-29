@@ -360,12 +360,17 @@ export default async function Home() {
       <Footer />
 
       {/* ── FLOATING WHATSAPP ── */}
-      <div className="wa-float">
+      <a
+        href={`https://wa.me/971505710805?text=${encodeURIComponent("Hi, I'm interested in your products. Could you provide more information?")}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="wa-float"
+      >
         <div className="wa-pill">WhatsApp</div>
         <div className="wa-circle">
           <FaWhatsapp color="white" size={24} />
         </div>
-      </div>
+      </a>
     </>
   );
 }
